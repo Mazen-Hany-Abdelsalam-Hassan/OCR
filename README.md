@@ -1,2 +1,2 @@
 # OCR
-[https://www.youtube.com/watch?v=or8AcS6y1xg]()
+[https://www.youtube.com/watch?v=or8AcS6y1xg]
