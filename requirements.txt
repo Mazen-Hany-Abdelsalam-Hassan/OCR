@@ -1,0 +1,7 @@
+torch==2.5.1
+torchvision==0.20.1
+albumentations==2.0.0
+pandas==2.2.3
+pillow==11.1.0
+scikit-learn==1.6.1
+opencv-python==4.10.0.84
