@@ -1,7 +1,7 @@
 import torch
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-DATA_DIR  = r'data\*.png'
+DATA_DIR  =r'data/*.png'
 IMAGE_WIDTH = 180
 IMAGE_HEIGHT = 90
 EPOCHS =20
