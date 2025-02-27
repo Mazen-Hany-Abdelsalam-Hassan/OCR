@@ -81,8 +81,9 @@ class OCR_Model(nn.Module):
     def forward(self , x, targets=None):
         bs,_ , _, _  = x.shape
         x =  self.RNN_and_OUT(self.CNN(x))
-        x = x.permute(1, 0, 2)
+
         if targets is not None:
+            x = x.permute(1, 0, 2)
             log_probs = F.log_softmax(x, 2)
             input_lengths = torch.full(size=(bs,), fill_value=log_probs.size(0), dtype=torch.int32)
             target_lengths = torch.full(size=(bs,), fill_value=targets.size(1), dtype=torch.int32)
