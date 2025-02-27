@@ -2,6 +2,7 @@ from src.config import IMAGE_WIDTH, IMAGE_HEIGHT
 
 from torch import nn
 import torch
+from torch.nn import functional as F
 class FeatureExtractor(nn.Module):
     def __init__(self, input_channel ):
         """
@@ -57,14 +58,14 @@ class SequencePredictor(nn.Module):
         self.RNN = nn.LSTM(output_feature_length, hidden_dim,
                            batch_first=True, bidirectional=True,)
         self.classification_head = nn.Linear(hidden_dim * 2, num_category)
-        self.activation = nn.Softmax(dim=2)
+        #self.activation = nn.Softmax(dim=2)
 
     def forward(self, x):
         res = self.Fc(x)
         res = self.Relu(res)
         res= self.RNN(res)[0]
         res = self.classification_head (res)
-        res = self.activation(res)
+        #res = self.activation(res)
         return res
 
 
@@ -77,5 +78,17 @@ class OCR_Model(nn.Module):
         self.RNN_and_OUT = SequencePredictor(feature_length= feature_length ,
                                         output_feature_length= output_feature_length ,
                                          hidden_dim = hidden_dim,num_category=num_category)
-    def forward(self , x):
-        return self.RNN_and_OUT(self.CNN(x))
+    def forward(self , x, targets=None):
+        bs,_ , _, _  = x.shape
+        x =  self.RNN_and_OUT(self.CNN(x))
+        x = x.permute(1, 0, 2)
+        if targets is not None:
+            log_probs = F.log_softmax(x, 2)
+            input_lengths = torch.full(size=(bs,), fill_value=log_probs.size(0), dtype=torch.int32)
+            target_lengths = torch.full(size=(bs,), fill_value=targets.size(1), dtype=torch.int32)
+            loss = nn.CTCLoss(blank=0)(log_probs, targets, input_lengths, target_lengths)
+            return x, loss
+
+        return x, None
+
+
