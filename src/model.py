@@ -1,6 +1,6 @@
 from src.config import IMAGE_WIDTH, IMAGE_HEIGHT
-import torch
 from torch import nn
+import torch
 class FeatureExtractor(nn.Module):
     def __init__(self, input_channel ):
         """
@@ -12,18 +12,13 @@ class FeatureExtractor(nn.Module):
         self.input_channel = input_channel
         self.ConvNet = nn.Sequential(
             nn.Conv2d(self.input_channel, 128, 3, padding=1, bias=False),
-            nn.BatchNorm2d(128),
             nn.ReLU(True),
             nn.MaxPool2d(2, 2),
 
-            nn.Conv2d(128, 512, 3, padding=1, bias=False),
-            nn.BatchNorm2d(512),
+            nn.Conv2d(128, 64, 3, padding=1, bias=False),
             nn.ReLU(True),
-            nn.MaxPool2d(2, 2),
+            nn.MaxPool2d(2, 2))
 
-            nn.Conv2d(512, 256, 3, padding=1, bias=False),
-            nn.BatchNorm2d(256),
-            nn.ReLU(True))
 
     def forward(self, x):
         result = self.ConvNet(x)
