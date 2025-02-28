@@ -51,7 +51,7 @@ def return_the_prediction(model:nn.Module,Sample:list):
     with torch.no_grad():
         model.to(DEVICE)
         prob = model(images)
-        res = prob.argmax(axis = 2).detach().numpy().tolist()
+        res = prob.argmax(axis = 2).detach().to('cpu').numpy().tolist()
     dec = [greedy_decoding(i) for i in res]
     return dec
 
