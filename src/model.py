@@ -51,14 +51,14 @@ class SequencePredictor(nn.Module):
         self.RNN = nn.LSTM(output_feature_length, hidden_dim,
                            batch_first=True, bidirectional=True,)
         self.classification_head = nn.Linear(hidden_dim * 2, num_category)
-        self.activation = nn.LogSoftmax(dim=2)
+        #self.activation = nn.LogSoftmax(dim=2)
 
     def forward(self, x):
         res = self.Fc(x)
         res = self.Relu(res)
         res= self.RNN(res)[0]
         res = self.classification_head (res)
-        res = self.activation(res)
+        #res = self.activation(res)
         return res
 
 
