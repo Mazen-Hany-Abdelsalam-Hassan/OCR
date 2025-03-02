@@ -2,7 +2,7 @@ import torch
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 DATA_DIR  = r'data/*.png'
-IMAGE_WIDTH = 180
+IMAGE_WIDTH = 220
 IMAGE_HEIGHT = 90
 EPOCHS =20
 MAX_SEQ_LENGTH = 6
