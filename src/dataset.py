@@ -21,7 +21,8 @@ class DatasetOCR(Dataset):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = cv2.resize(image,(IMAGE_WIDTH, IMAGE_HEIGHT), interpolation=cv2.INTER_LINEAR)
         image = self._preprocessing_pipeline(image = image)['image']
-        return image , torch.tensor(image_label)
+        lenght_data = len([i for i in image_label if image_label!=0])
+        return image , torch.tensor(image_label) , torch.tensor(length_data)
     def __len__(self):
         return len(self._X)
 
