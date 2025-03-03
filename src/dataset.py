@@ -3,6 +3,7 @@ from src.config import TRAIN_PROCESSING_PIPELINE , TEST_PROCESSING_PIPELINE ,IMA
 import cv2
 import albumentations as A
 import torch
+import os
 
 class DatasetOCR(Dataset):
     def __init__(self , x , y , for_what = 'Train'):
