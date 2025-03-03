@@ -45,7 +45,7 @@ def plot_the_image(test:list , size:int , model:nn.Module ):
 
 def return_the_prediction(model:nn.Module,Sample:list):
     data = DataLoader(DatasetOCR(x=Sample,y = [5] * len(Sample) , for_what="Test") , batch_size=len(Sample))
-    for images, _ in data:
+    for images, _,_ in data:
         images = images.to(DEVICE)
     model.eval()
     with torch.no_grad():
